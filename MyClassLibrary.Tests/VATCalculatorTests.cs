@@ -54,9 +54,6 @@ namespace MyClassLibrary.Tests
             var netValue = 100m;
             var varPerc = 4.24m;
 
-
-            dfghdfghj fgdsfgdhj dfghjfdghjfghdj
-
             //Act & Assert
             Assert.Throws<ArgumentException>(() =>
             {
