@@ -60,5 +60,53 @@ namespace MyClassLibrary.Tests
                 var actual = sut.CalculateTotalValue(netValue, varPerc);
             });
         }
+
+        [Fact]
+        public void CalculateNetValue_TotalValue124IsGivenWith24VATPerc_Returns100NetValue()
+        {
+            //Arrange
+            var sut = CreateDefaultSUT();
+            var totalValue = 124m;
+            var vatPerc = 0.24m;
+            var expected = 100m;
+
+            //Act
+            var actual = sut.CalculateNetValue(totalValue, vatPerc);
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CalculateNetValue_InvalidVatPerc_ThrowsArgumentException()
+        {
+            //Arrange
+            var sut = CreateDefaultSUT();
+            var totalValue = 124m;
+            var varPerc = -4.24m;
+
+            //Act & Assert
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var actual = sut.CalculateNetValue(totalValue, varPerc);
+            });
+        }
+
+
+        [Fact]
+        public void CalculateNetValue_ZeroVatPerc_ReturnsNetValueAsIs()
+        {
+            //Arrange
+            var sut = CreateDefaultSUT();
+            var totalValue = 124m;
+            var varPerc = 0;
+            var expected = 124m;
+
+            //Act
+            var actual = sut.CalculateNetValue(totalValue, varPerc);
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }
