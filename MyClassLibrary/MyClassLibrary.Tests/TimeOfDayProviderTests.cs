@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,13 +8,14 @@ using Xunit;
 
 namespace MyClassLibrary.Tests
 {
-    public class FakeSystemClock : ISystemClock
-    {
-        public DateTime GetNow()
-        {
-            return new DateTime(2021, 1, 1, 3, 30, 00);
-        }
-    }
+    //public class FakeSystemClock : ISystemClock
+    //{
+    //    public DateTime GetNow()
+    //    {
+    //        return new DateTime(2021, 1, 1, 3, 30, 00);
+    //    }
+    //}
+    //MOQ -> mock
 
     public class TimeOfDayProviderTests
     {
@@ -21,7 +23,10 @@ namespace MyClassLibrary.Tests
         public void GetTimeOfDay_Is3AM_ReturnsNight()
         {
             //Arrange
-            var sut = new TimeOfDayProvider(new FakeSystemClock());
+            var systemClockMock = new Mock<ISystemClock>();
+            systemClockMock.Setup(x => x.GetNow()).Returns(new DateTime(2021, 1, 1, 3, 30, 00));
+
+            var sut = new TimeOfDayProvider(systemClockMock.Object);
             var expected = TimeOfDay.Night;
 
             //Act
